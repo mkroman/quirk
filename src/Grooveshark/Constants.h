@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef __GROOVESHARK_CONSTANTS_
-#define __GROOVESHARK_CONSTANTS_
+#ifndef __GROOVESHARK_CONSTANTS_H_
+#define __GROOVESHARK_CONSTANTS_H_
 
 #define gDebug(string) \
 	std::cout << __PRETTY_FUNCTION__ << " -> " << string << std::endl;

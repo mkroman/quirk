@@ -24,8 +24,7 @@
 
 Grooveshark::Connection::Connection()
 {
-	std::cout << Grooveshark::Client::Instance() << std::endl;
-	//gDebug("Initialized " << Grooveshark::Client::Instance());
+	Grooveshark::Client::Instance(); // I need to access this
 }
 
 Grooveshark::Connection::~Connection()

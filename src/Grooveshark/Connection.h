@@ -27,6 +27,7 @@
 #include <curlpp/Easy.hpp>
 #include <curlpp/Options.hpp>
 
+#include "Client.h"
 #include "Constants.h"
 
 using namespace curlpp::options;

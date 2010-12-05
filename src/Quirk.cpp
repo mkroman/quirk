@@ -27,5 +27,5 @@
 int main(int argc, char* argv[]) {
 	Grooveshark::Client::Instance().establishConnection();
 
-    return 0;
+	return 0;
 }

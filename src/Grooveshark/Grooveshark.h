@@ -20,8 +20,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef __GROOVESHARK_
-#define __GROOVESHARK_
+#ifndef __GROOVESHARK_H_
+#define __GROOVESHARK_H_
 
 #include "Constants.h"
 #include "Client.h"

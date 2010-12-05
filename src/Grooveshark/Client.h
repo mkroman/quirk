@@ -46,7 +46,7 @@ namespace Grooveshark {
 		protected:
 			Client();
 
-			Connection* connection;
+			Grooveshark::Connection* connection;
 	};
 };
 
