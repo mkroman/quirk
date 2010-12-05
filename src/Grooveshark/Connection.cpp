@@ -20,6 +20,9 @@
  * THE SOFTWARE.
  */
 
+#include <iostream>
+#include <sstream>
+
 #include "Connection.h"
 
 Grooveshark::Connection::Connection() :
@@ -41,6 +44,22 @@ void Grooveshark::Connection::initiateSession()
 
 void Grooveshark::Connection::processPHPCookie()
 {
-	request.setOpt<curlpp::options::Url>("http://listen.grooveshark.com");
-	request.perform();
+	std::ostringstream buffer;
+
+	gsDebug("Processing PHP cookie...");
+
+	try {
+		request.setOpt<cURLpp::Options::Url>("http://listen.grooveshark.com");
+		request.setOpt<cURLpp::Options::WriteStream>(&buffer);
+		request.perform();
+
+		// Get the PHP Session cookie here..
+
+	} catch (cURLpp::LogicError& exception) {
+		gsError(exception.what());
+	} catch (cURLpp::RuntimeError& exception) {
+		gsError(exception.what());
+	}
+
+	gsDebug("Processing complete...");
 }

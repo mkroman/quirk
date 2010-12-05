@@ -26,6 +26,7 @@
 #include <curlpp/cURLpp.hpp>
 #include <curlpp/Easy.hpp>
 #include <curlpp/Options.hpp>
+#include <curlpp/Infos.hpp>
 
 #include "Client.h"
 #include "Constants.h"
@@ -44,8 +45,8 @@ namespace Grooveshark {
 		private:
 			std::string phpCookie;
 
-			curlpp::Cleanup cleanup;
-			curlpp::Easy request;
+			cURLpp::Cleanup cleanup;
+			cURLpp::Easy request;
 	};
 };
 

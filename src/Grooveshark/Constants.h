@@ -23,8 +23,11 @@
 #ifndef __GROOVESHARK_CONSTANTS_H_
 #define __GROOVESHARK_CONSTANTS_H_
 
-#define gDebug(string) \
+#define gsDebug(string) \
 	std::cout << __PRETTY_FUNCTION__ << " -> " << string << std::endl;
+
+#define gsError(string) \
+	std::cout << "Error in " << __PRETTY_FUNCTION__ << " (" << string << ") on line " << __LINE__ << std::endl;
 
 #define GROOVESHARK_REVISION "20100412.09"
 #define GROOVESHARK_SECRET ":quitStealinMahShit:"
