@@ -37,6 +37,6 @@ Grooveshark::Client::~Client()
 
 void Grooveshark::Client::establishConnection()
 {
-	gDebug("heil hitler");
+	connection->initiateSession();
 }
 

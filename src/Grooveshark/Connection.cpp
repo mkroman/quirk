@@ -22,12 +22,25 @@
 
 #include "Connection.h"
 
-Grooveshark::Connection::Connection()
+Grooveshark::Connection::Connection() :
+	cleanup(),
+	request()
 {
-	Grooveshark::Client::Instance(); // I need to access this
+	// …
 }
 
 Grooveshark::Connection::~Connection()
 {
 	// …
+}
+
+void Grooveshark::Connection::initiateSession()
+{
+	processPHPCookie();
+}
+
+void Grooveshark::Connection::processPHPCookie()
+{
+	request.setOpt<curlpp::options::Url>("http://listen.grooveshark.com");
+	request.perform();
 }

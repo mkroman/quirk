@@ -27,6 +27,10 @@
 #include <curlpp/Easy.hpp>
 #include <curlpp/Options.hpp>
 
+namespace Grooveshark {
+	class Connection;
+}
+
 #include "Constants.h"
 #include "Connection.h"
 

@@ -30,15 +30,20 @@
 #include "Client.h"
 #include "Constants.h"
 
-using namespace curlpp::options;
-
 namespace Grooveshark {
 	class Connection {
 		public:
 			Connection();
 			~Connection();
 
+			void initiateSession();
+
+		protected:
+			void processPHPCookie();
+
 		private:
+			std::string phpCookie;
+
 			curlpp::Cleanup cleanup;
 			curlpp::Easy request;
 	};
