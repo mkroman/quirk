@@ -27,7 +27,7 @@
 #include <curlpp/Easy.hpp>
 #include <curlpp/Options.hpp>
 #include <curlpp/Infos.hpp>
-#include <json/json.h>
+#include <sstream>
 
 #include "Client.h"
 #include "Constants.h"
@@ -46,6 +46,7 @@ namespace Grooveshark {
 
 		private:
 			cURLpp::Easy request;
+			std::ostringstream buffer;
 	};
 };
 

@@ -30,7 +30,10 @@ Grooveshark::Connection::Connection() :
 	request()
 {
 	cURLpp::initialize(CURL_GLOBAL_ALL);
-	// …
+	request.setOpt<cURLpp::Options::WriteStream>(&buffer);
+#if CURL_VERBOSE == TRUE
+	request.setOpt<cURLpp::Options::Verbose>(true);
+#endif
 }
 
 Grooveshark::Connection::~Connection()
@@ -44,30 +47,50 @@ void Grooveshark::Connection::initiateSession()
 	fetchSessionToken();
 }
 
-void Grooveshark::Connection::fetchSessionToken() {
-	std::ostringstream buffer;
-
+void Grooveshark::Connection::fetchSessionToken()
+{
 	gsDebug("Fetching session token...");
 
 	try {
-		// TODO: Build a request package here
 		request.setOpt<cURLpp::Options::Url>("https://cowbell.grooveshark.com/service.php");
+
+		std::list<std::string> header;
+		header.push_back("Content-Type: application/json");
+
+		request.setOpt<cURLpp::Options::HttpHeader>(header);
+
+		// Start constructing the json data
+		Json::Value jheaders;
+		jheaders["client"] = "gslite";
+		jheaders["clientRevision"] = GROOVESHARK_REVISION;
+
+		Json::Value jparams;
+		jparams["secretKey"] = "fem fire tre to en";
+
+		Json::Value jlist;
+		jlist["method"] = "getCommunicationToken";
+		jlist["header"] = jheaders;
+		jlist["parameters"] = jparams;
+
+		Json::FastWriter writer;
+		request.setOpt<cURLpp::Options::PostFields>(writer.write(jlist));
+
 		request.perform();
+
 	} catch (cURLpp::LogicError& exception) {
+		gsError(exception.what());
+	} catch (cURLpp::RuntimeError& exception) {
 		gsError(exception.what());
 	}
 }
 
 void Grooveshark::Connection::processPHPCookie()
 {
-	std::ostringstream buffer;
-
 	gsDebug("Storing PHP cookie...");
 
 	try {
 		request.setOpt<cURLpp::Options::Url>("http://listen.grooveshark.com");
-		request.setOpt<cURLpp::Options::WriteStream>(&buffer);
-		request.setOpt<cURLpp::Options::CookieFile>("grooveshark.com");
+		request.setOpt<cURLpp::Options::CookieFile>("grooveshark.cookie");
 		request.perform();
 	} catch (cURLpp::LogicError& exception) {
 		gsError(exception.what());

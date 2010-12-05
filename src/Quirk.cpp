@@ -20,6 +20,7 @@
  * THE SOFTWARE.
  */
 
+#include <json/json.h>
 #include <iostream>
 
 #include "Grooveshark/Grooveshark.h"

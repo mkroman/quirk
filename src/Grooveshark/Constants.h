@@ -29,6 +29,8 @@
 #define gsError(string) \
 	std::cout << "Error in " << __PRETTY_FUNCTION__ << " (" << string << ") on line " << __LINE__ << std::endl;
 
+#define CURL_VERBOSE TRUE
+
 #define GROOVESHARK_REVISION "20100412.09"
 #define GROOVESHARK_SECRET ":quitStealinMahShit:"
 
