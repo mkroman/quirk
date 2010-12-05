@@ -27,6 +27,7 @@
 #include <curlpp/Easy.hpp>
 #include <curlpp/Options.hpp>
 #include <curlpp/Infos.hpp>
+#include <json/json.h>
 
 #include "Client.h"
 #include "Constants.h"
@@ -41,11 +42,9 @@ namespace Grooveshark {
 
 		protected:
 			void processPHPCookie();
+			void fetchSessionToken();
 
 		private:
-			std::string phpCookie;
-
-			cURLpp::Cleanup cleanup;
 			cURLpp::Easy request;
 	};
 };

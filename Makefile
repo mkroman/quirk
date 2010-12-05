@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -Wall -g -I/usr/local/include -I/usr/include
-LDFLAGS = -L/usr/local/lib -L/usr/lib -lcurl -lcurlpp
+LDFLAGS = -L/usr/local/lib -L/usr/lib -lcurl -lcurlpp -ljson
 SOURCES = src/Quirk.cpp src/Grooveshark/Connection.cpp src/Grooveshark/Client.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = bin/quirk
