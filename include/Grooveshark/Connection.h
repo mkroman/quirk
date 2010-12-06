@@ -23,14 +23,14 @@
 #ifndef __GROOVESHARK_CONNECTION_H
 #define __GROOVESHARK_CONNECTION_H
 
-#include <curlpp/cURLpp.hpp>
-#include <curlpp/Easy.hpp>
 #include <curlpp/Options.hpp>
+#include <curlpp/cURLpp.hpp>
 #include <curlpp/Infos.hpp>
+#include <curlpp/Easy.hpp>
+#include <json/json.h>
 #include <sstream>
 
-#include "Client.h"
-#include "Constants.h"
+#include "Grooveshark/Constants.h"
 
 namespace Grooveshark {
 	class Connection {
@@ -43,6 +43,8 @@ namespace Grooveshark {
 		protected:
 			void processPHPCookie();
 			void fetchSessionToken();
+
+			std::string buildJSON(const std::string& method, Json::Value& params);
 
 		private:
 			cURLpp::Easy request;

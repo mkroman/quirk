@@ -22,9 +22,8 @@
 
 #include <json/json.h>
 #include <iostream>
-#include <sstream>
 
-#include "Connection.h"
+#include "Grooveshark/Connection.h"
 
 Grooveshark::Connection::Connection() :
 	request()
@@ -56,25 +55,12 @@ void Grooveshark::Connection::fetchSessionToken()
 
 		std::list<std::string> header;
 		header.push_back("Content-Type: application/json");
-
 		request.setOpt<cURLpp::Options::HttpHeader>(header);
-
-		// Start constructing the json data
-		Json::Value jheaders;
-		jheaders["client"] = "gslite";
-		jheaders["clientRevision"] = GROOVESHARK_REVISION;
 
 		Json::Value jparams;
 		jparams["secretKey"] = "fem fire tre to en";
 
-		Json::Value jlist;
-		jlist["method"] = "getCommunicationToken";
-		jlist["header"] = jheaders;
-		jlist["parameters"] = jparams;
-
-		Json::FastWriter writer;
-		request.setOpt<cURLpp::Options::PostFields>(writer.write(jlist));
-
+		request.setOpt<cURLpp::Options::PostFields>(buildJSON("getCommunicationToken", jparams));
 		request.perform();
 
 	} catch (cURLpp::LogicError& exception) {
@@ -82,6 +68,21 @@ void Grooveshark::Connection::fetchSessionToken()
 	} catch (cURLpp::RuntimeError& exception) {
 		gsError(exception.what());
 	}
+}
+
+std::string Grooveshark::Connection::buildJSON(const std::string& method, Json::Value& params)
+{
+	Json::FastWriter writer;
+	Json::Value jheaders, jlist;
+
+	jheaders["client"] = "gslite";
+	jheaders["clientRevision"] = GROOVESHARK_REVISION;
+
+	jlist["method"] = method;
+	jlist["header"] = jheaders;
+	jlist["parameters"] = params;
+
+	return writer.write(jlist);
 }
 
 void Grooveshark::Connection::processPHPCookie()

@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-#include "Client.h"
+#include "Grooveshark/Client.h"
 
 Grooveshark::Client::Client() :
 	connection(new Grooveshark::Connection())
