@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -g -I/usr/local/include -I/usr/include -I/home/mk/Projects/Quirk/include
+CXXFLAGS = -Wall -g -I/usr/local/include -I/usr/include -I./include
 LDFLAGS = -L/usr/local/lib -L/usr/lib -lcurl -lcurlpp -ljson
 SOURCES = src/Quirk.cpp src/Grooveshark/Connection.cpp src/Grooveshark/Client.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
