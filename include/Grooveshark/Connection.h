@@ -23,10 +23,19 @@
 #ifndef __GROOVESHARK_CONNECTION_H
 #define __GROOVESHARK_CONNECTION_H
 
+#include <curl/curl.h>
 #include <json/json.h>
 #include <sstream>
 
 #include "Grooveshark/Constants.h"
+
+
+struct curl_cookie {
+	char* key;
+	char* value;
+};
+
+curl_cookie* curl_parse_cookie(curl_slist* list);
 
 namespace Grooveshark {
 	class Connection {
@@ -43,7 +52,7 @@ namespace Grooveshark {
 			std::string buildJSON(const std::string& method, Json::Value& params);
 
 		private:
-			cURLpp::Easy request;
+			CURL* curl;
 			std::ostringstream buffer;
 	};
 };

@@ -20,19 +20,26 @@
  * THE SOFTWARE.
  */
 
+#include <curl/curl.h>
 #include <json/json.h>
+#include <string.h>
+#include <stdlib.h>
 #include <iostream>
 
 #include "Grooveshark/Connection.h"
 
-Grooveshark::Connection::Connection()
+Grooveshark::Connection::Connection() :
+	curl(curl_easy_init())
 {
 	curl_global_init(CURL_GLOBAL_ALL);
+	curl_easy_setopt(curl, CURLOPT_VERBOSE, true);
+	curl_easy_setopt(curl, CURLOPT_COOKIEFILE, "");
 }
 
 Grooveshark::Connection::~Connection()
 {
-	curl_global_cleanup(CURL_GLOBAL_ALL);
+	curl_easy_cleanup(curl);
+	curl_global_cleanup();
 }
 
 void Grooveshark::Connection::initiateSession()
@@ -66,6 +73,45 @@ std::string Grooveshark::Connection::buildJSON(const std::string& method, Json::
 void Grooveshark::Connection::processPHPCookie()
 {
 	gsDebug("Storing PHP cookie...");
+
+	CURLcode response;
 	
-	
+	curl_easy_setopt(curl, CURLOPT_URL, "http://listen.grooveshark.com/");
+	response = curl_easy_perform(curl);
+
+	struct curl_slist *cookies;
+	curl_easy_getinfo(curl, CURLINFO_COOKIELIST, &cookies);
+
+	curl_cookie* cookie = curl_parse_cookie(&cookies[0]);
+
+	printf("%s = %s\n", cookie->key, cookie->value);
+
+	free(cookie);
+
+	curl_slist_free_all(cookies);
+}
+
+curl_cookie* curl_parse_cookie(curl_slist* slist)
+{
+	curl_cookie* cookie;
+	char *token;
+	int i;
+
+	i = 0;
+	cookie = (curl_cookie*)malloc(sizeof(cookie));
+	token = strtok(slist->data, "\t");
+
+	while (token)
+	{
+		if (i == 5)
+			cookie->key = token;
+		else if (i == 6)
+			cookie->value = token;
+
+		i++;
+		token = strtok(NULL, "\t");
+	}
+
+	free(token);
+	return cookie;
 }
