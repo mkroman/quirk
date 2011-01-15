@@ -23,10 +23,6 @@
 #ifndef __GROOVESHARK_CONNECTION_H
 #define __GROOVESHARK_CONNECTION_H
 
-#include <curlpp/Options.hpp>
-#include <curlpp/cURLpp.hpp>
-#include <curlpp/Infos.hpp>
-#include <curlpp/Easy.hpp>
 #include <json/json.h>
 #include <sstream>
 

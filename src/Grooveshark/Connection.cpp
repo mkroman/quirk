@@ -25,19 +25,14 @@
 
 #include "Grooveshark/Connection.h"
 
-Grooveshark::Connection::Connection() :
-	request()
+Grooveshark::Connection::Connection()
 {
-	cURLpp::initialize(CURL_GLOBAL_ALL);
-	request.setOpt<cURLpp::Options::WriteStream>(&buffer);
-#if CURL_VERBOSE == TRUE
-	request.setOpt<cURLpp::Options::Verbose>(true);
-#endif
+	curl_global_init(CURL_GLOBAL_ALL);
 }
 
 Grooveshark::Connection::~Connection()
 {
-	cURLpp::terminate();
+	curl_global_cleanup(CURL_GLOBAL_ALL);
 }
 
 void Grooveshark::Connection::initiateSession()
@@ -49,25 +44,8 @@ void Grooveshark::Connection::initiateSession()
 void Grooveshark::Connection::fetchSessionToken()
 {
 	gsDebug("Fetching session token...");
-
-	try {
-		request.setOpt<cURLpp::Options::Url>("https://cowbell.grooveshark.com/service.php");
-
-		std::list<std::string> header;
-		header.push_back("Content-Type: application/json");
-		request.setOpt<cURLpp::Options::HttpHeader>(header);
-
-		Json::Value jparams;
-		jparams["secretKey"] = "fem fire tre to en";
-
-		request.setOpt<cURLpp::Options::PostFields>(buildJSON("getCommunicationToken", jparams));
-		request.perform();
-
-	} catch (cURLpp::LogicError& exception) {
-		gsError(exception.what());
-	} catch (cURLpp::RuntimeError& exception) {
-		gsError(exception.what());
-	}
+	
+	
 }
 
 std::string Grooveshark::Connection::buildJSON(const std::string& method, Json::Value& params)
@@ -88,16 +66,6 @@ std::string Grooveshark::Connection::buildJSON(const std::string& method, Json::
 void Grooveshark::Connection::processPHPCookie()
 {
 	gsDebug("Storing PHP cookie...");
-
-	try {
-		request.setOpt<cURLpp::Options::Url>("http://listen.grooveshark.com");
-		request.setOpt<cURLpp::Options::CookieFile>("grooveshark.cookie");
-		request.perform();
-	} catch (cURLpp::LogicError& exception) {
-		gsError(exception.what());
-	} catch (cURLpp::RuntimeError& exception) {
-		gsError(exception.what());
-	}
-
-	gsDebug("Storage complete...");
+	
+	
 }

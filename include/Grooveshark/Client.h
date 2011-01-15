@@ -23,10 +23,6 @@
 #ifndef __GROOVESHARK_CLIENT_H_
 #define __GROOVESHARK_CLIENT_H_
 
-#include <curlpp/cURLpp.hpp>
-#include <curlpp/Easy.hpp>
-#include <curlpp/Options.hpp>
-
 namespace Grooveshark {
 	class Connection;
 }
